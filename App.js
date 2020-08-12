@@ -10,6 +10,7 @@ import LottieView from "lottie-react-native";
 import animationErrorApi from './assets/error-api.json'
 import useToogle from "./hooks/useToogle";
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -47,17 +48,16 @@ const Home = () => {
     await setLocation({ location: { latitude, longitude, speed } })
   }
 
-const URL_API = `https://xlmd94l53b.execute-api.eu-west-2.amazonaws.com/api?lat=${location.location.latitude}&long=${location.location.longitude}`
 
   const getApi = async () => {
     setRefresh(true)
-    axios.get(URL_API, {
+    axios.get(`https://xlmd94l53b.execute-api.eu-west-2.amazonaws.com/api?lat=${location.location.latitude}&long=${location.location.longitude}`, {
     })
         .then(response => {
           setRefresh(false)
           setFoods(response.data.restaurants)
 
-        }).catch((err) => {
+        }).catch(() => {
       setRefresh(false)
       setModalActive(true)
     })
@@ -123,7 +123,9 @@ useEffect(() => {
             onRefresh={getApi}
             data={[...foods]}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => (<ListItem item={item}/>)}
+            renderItem={({ item }) => (
+                <ListItem item={item}/>
+            )}
         />
       </View>
   )
