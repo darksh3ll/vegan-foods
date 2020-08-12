@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { Avatar, Divider, Badge,Rating, AirbnbRating } from 'react-native-elements'
+import { Avatar, Divider } from 'react-native-elements'
+import PropTypes from "prop-types";
 
 const styles = StyleSheet.create({
   container: {
@@ -10,7 +11,8 @@ const styles = StyleSheet.create({
   },
   distance: {
     margin: 5,
-    color: '#800080'
+    color: 'gray',
+    flexGrow:1
   },
   containerInfo: {
     flexDirection: 'column',
@@ -42,22 +44,22 @@ const ListItem = React.memo(({ item }) => {
             <Avatar
                 size='medium'
                 rounded
-                source={{
-                  uri:
-                 formatUrl(item.logo)
-                }}
+                source={{uri: formatUrl(item.logo)}}
             />
           </View>
-
           <Text style={styles.distance}>{item.name}</Text>
           <Text>{item.note}</Text>
         </View>
+        <View style={{padding:20}}>
+          <Text>{item.description}</Text>
+        </View>
         <Divider style={{ backgroundColor: '#717171' }} />
       </>
-
   )
 })
 
-
+ListItem.propTypes = {
+  item: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default ListItem
